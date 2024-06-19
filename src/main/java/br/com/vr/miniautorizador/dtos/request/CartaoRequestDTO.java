@@ -1,8 +1,7 @@
-package br.com.vr.miniautorizador.dto.request;
+package br.com.vr.miniautorizador.dtos.request;
 
 import br.com.vr.miniautorizador.entities.Cartao;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record CartaoRequestDTO(

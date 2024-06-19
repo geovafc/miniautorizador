@@ -1,6 +1,6 @@
-package br.com.vr.miniautorizador.controller;
+package br.com.vr.miniautorizador.controllers;
 
-import br.com.vr.miniautorizador.dto.response.ErrorResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.ErrorResponseDTO;
 import br.com.vr.miniautorizador.exceptions.CartaoJaExistenteException;
 import br.com.vr.miniautorizador.exceptions.CartaoNaoEncontradoException;
 import br.com.vr.miniautorizador.exceptions.SaldoInsuficienteException;

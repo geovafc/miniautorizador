@@ -1,8 +1,8 @@
-package br.com.vr.miniautorizador.controller;
+package br.com.vr.miniautorizador.controllers;
 
-import br.com.vr.miniautorizador.dto.request.TransacaoRequestDTO;
-import br.com.vr.miniautorizador.dto.response.TransacaoResponseDTO;
-import br.com.vr.miniautorizador.service.TransacaoService;
+import br.com.vr.miniautorizador.dtos.request.TransacaoRequestDTO;
+import br.com.vr.miniautorizador.dtos.response.TransacaoResponseDTO;
+import br.com.vr.miniautorizador.services.TransacaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
 package br.com.vr.miniautorizador.entities;
 
 
-import br.com.vr.miniautorizador.dto.response.CartaoResponseDTO;
-import br.com.vr.miniautorizador.dto.response.SaldoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.CartaoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.SaldoResponseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

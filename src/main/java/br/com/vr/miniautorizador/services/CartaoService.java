@@ -1,11 +1,12 @@
-package br.com.vr.miniautorizador.service;
+package br.com.vr.miniautorizador.services;
 
-import br.com.vr.miniautorizador.dto.request.CartaoRequestDTO;
-import br.com.vr.miniautorizador.dto.response.CartaoResponseDTO;
-import br.com.vr.miniautorizador.dto.response.SaldoResponseDTO;
+import br.com.vr.miniautorizador.dtos.request.CartaoRequestDTO;
+import br.com.vr.miniautorizador.dtos.response.CartaoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.SaldoResponseDTO;
 import br.com.vr.miniautorizador.entities.Cartao;
 import br.com.vr.miniautorizador.exceptions.CartaoJaExistenteException;
 import br.com.vr.miniautorizador.exceptions.CartaoNaoEncontradoException;
+import br.com.vr.miniautorizador.mappers.CartaoMapper;
 import br.com.vr.miniautorizador.repositories.CartaoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,11 @@ public class CartaoService {
 
     private final CartaoRepository cartaoRepository;
 
-    public CartaoService(CartaoRepository cartaoRepository) {
+    private final CartaoMapper cartaoMapper;
+
+    public CartaoService(CartaoRepository cartaoRepository, CartaoMapper cartaoMapper) {
         this.cartaoRepository = cartaoRepository;
+        this.cartaoMapper = cartaoMapper;
     }
 
     public CartaoResponseDTO criar(final CartaoRequestDTO cartaoRequestDTO) {
@@ -25,10 +29,14 @@ public class CartaoService {
 
         verificarNumeroDuplicado(cartaoRequestDTO);
 
-        final var cartaoEntity = cartaoRequestDTO.toEntity();
+//        final var cartaoEntity = cartaoRequestDTO.toEntity();
+        final var cartaoEntity = cartaoMapper.toEntity(cartaoRequestDTO);
         cartaoEntity.inicializarSaldo();
 
-        return cartaoRepository.save(cartaoEntity).toDTO();
+        final var cartaoResponseDTO = cartaoMapper.toDTO(cartaoRepository.save(cartaoEntity));
+
+//        return cartaoRepository.save(cartaoEntity).toDTO();
+        return cartaoResponseDTO;
     }
 
     private void verificarNumeroDuplicado(CartaoRequestDTO cartaoRequestDTO) {

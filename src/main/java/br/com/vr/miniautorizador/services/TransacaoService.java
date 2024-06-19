@@ -1,7 +1,7 @@
-package br.com.vr.miniautorizador.service;
+package br.com.vr.miniautorizador.services;
 
-import br.com.vr.miniautorizador.dto.request.TransacaoRequestDTO;
-import br.com.vr.miniautorizador.dto.response.TransacaoResponseDTO;
+import br.com.vr.miniautorizador.dtos.request.TransacaoRequestDTO;
+import br.com.vr.miniautorizador.dtos.response.TransacaoResponseDTO;
 import br.com.vr.miniautorizador.entities.Cartao;
 import br.com.vr.miniautorizador.exceptions.CartaoNaoEncontradoException;
 import br.com.vr.miniautorizador.exceptions.SaldoInsuficienteException;

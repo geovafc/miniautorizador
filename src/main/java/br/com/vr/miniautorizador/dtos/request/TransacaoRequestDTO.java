@@ -1,4 +1,4 @@
-package br.com.vr.miniautorizador.dto.request;
+package br.com.vr.miniautorizador.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
