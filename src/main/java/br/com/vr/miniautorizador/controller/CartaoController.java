@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/cartoes")
+@RequestMapping("/cartoes")
 public class CartaoController {
 
     private final CartaoService cartaoService;
@@ -26,7 +26,7 @@ public class CartaoController {
         return new ResponseEntity<>(cartaoResponseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/saldo/{numeroCartao}")
+    @GetMapping("/{numeroCartao}")
     public ResponseEntity<SaldoResponseDTO> saldoPorNumeroCartao(@PathVariable final String numeroCartao) {
         final var saldoResponse = cartaoService.saldoPorNumeroCartao(numeroCartao);
 
