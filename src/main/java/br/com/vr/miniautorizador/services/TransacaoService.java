@@ -23,7 +23,8 @@ public class TransacaoService {
     }
 
     public TransacaoResponseDTO realizarTransacao(final TransacaoRequestDTO transacaoRequestDTO) {
-//        todo: add logs
+        log.info("m=realizarTransacao, transacaoRequestDTO= {}", transacaoRequestDTO);
+
         final var cartao = buscarCartaoPorNumero(transacaoRequestDTO.numeroCartao());
 
         validarSenha(cartao, transacaoRequestDTO.senha());
@@ -33,8 +34,6 @@ public class TransacaoService {
 
         final var cartaoComSaldoAtualizado = cartaoRepository.save(cartao);
 
-//        Todo
-//        Fazer uso do mapper
         return new TransacaoResponseDTO(cartaoComSaldoAtualizado.getNumeroCartao(), cartaoComSaldoAtualizado.getSaldo());
     }
 

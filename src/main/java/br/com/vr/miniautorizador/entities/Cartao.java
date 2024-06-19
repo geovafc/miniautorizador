@@ -31,14 +31,6 @@ public class Cartao {
     public void inicializarSaldo(){
         this.saldo = new BigDecimal("500.00");
     }
-//Todo remover esses métodos e adicionar para um converter ou mapper
-    public CartaoResponseDTO toDTO(){
-        return new CartaoResponseDTO(this.id, this.numeroCartao, this.senha, this.saldo);
-    }
-
-    public SaldoResponseDTO toSaldoResponseDTO(){
-        return new SaldoResponseDTO(this.saldo);
-    }
 
     public void diminuirSaldo(BigDecimal valorTransacao) {
         this.saldo = this.saldo.subtract(valorTransacao);

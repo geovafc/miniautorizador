@@ -1,12 +1,12 @@
 package br.com.vr.miniautorizador.services;
 
+import br.com.vr.miniautorizador.converters.CartaoConverter;
 import br.com.vr.miniautorizador.dtos.request.CartaoRequestDTO;
 import br.com.vr.miniautorizador.dtos.response.CartaoResponseDTO;
 import br.com.vr.miniautorizador.dtos.response.SaldoResponseDTO;
 import br.com.vr.miniautorizador.entities.Cartao;
 import br.com.vr.miniautorizador.exceptions.CartaoJaExistenteException;
 import br.com.vr.miniautorizador.exceptions.CartaoNaoEncontradoException;
-import br.com.vr.miniautorizador.mappers.CartaoMapper;
 import br.com.vr.miniautorizador.repositories.CartaoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,12 @@ public class CartaoService {
 
     private final CartaoRepository cartaoRepository;
 
-    private final CartaoMapper cartaoMapper;
+    private final CartaoConverter cartaoConverter;
 
-    public CartaoService(CartaoRepository cartaoRepository, CartaoMapper cartaoMapper) {
+
+    public CartaoService(CartaoRepository cartaoRepository) {
         this.cartaoRepository = cartaoRepository;
-        this.cartaoMapper = cartaoMapper;
+        this.cartaoConverter = new CartaoConverter();
     }
 
     public CartaoResponseDTO criar(final CartaoRequestDTO cartaoRequestDTO) {
@@ -29,17 +30,13 @@ public class CartaoService {
 
         verificarNumeroDuplicado(cartaoRequestDTO);
 
-//        final var cartaoEntity = cartaoRequestDTO.toEntity();
-        final var cartaoEntity = cartaoMapper.toEntity(cartaoRequestDTO);
+        final var cartaoEntity = cartaoConverter.toEntity(cartaoRequestDTO);
         cartaoEntity.inicializarSaldo();
 
-        final var cartaoResponseDTO = cartaoMapper.toDTO(cartaoRepository.save(cartaoEntity));
-
-//        return cartaoRepository.save(cartaoEntity).toDTO();
-        return cartaoResponseDTO;
+        return cartaoConverter.toDTO(cartaoRepository.save(cartaoEntity));
     }
 
-    private void verificarNumeroDuplicado(CartaoRequestDTO cartaoRequestDTO) {
+    private void verificarNumeroDuplicado(final CartaoRequestDTO cartaoRequestDTO) {
         final var numeroCartao = cartaoRequestDTO.numeroCartao();
 
         if (cartaoRepository.existsByNumeroCartao(numeroCartao)) {
@@ -47,15 +44,15 @@ public class CartaoService {
         }
     }
 
-    public SaldoResponseDTO saldoPorNumeroCartao(String numeroCartao) {
+    public SaldoResponseDTO saldoPorNumeroCartao(final String numeroCartao) {
         log.info("m=saldoPorNumeroCartao, numeroCartao= {}", numeroCartao);
 
-        final var saldoResponseDTO = buscarCartaoPorNumero(numeroCartao).toSaldoResponseDTO();
+        final var saldoCartao = buscarCartaoPorNumero(numeroCartao).getSaldo();
 
-        return saldoResponseDTO;
+        return new SaldoResponseDTO(saldoCartao);
     }
 
-    private Cartao buscarCartaoPorNumero(String numeroCartao) {
+    private Cartao buscarCartaoPorNumero(final String numeroCartao) {
         return cartaoRepository.findByNumeroCartao(numeroCartao)
                 .orElseThrow(() -> new CartaoNaoEncontradoException("Cartão não encontrado com o número informado: " + numeroCartao));
     }

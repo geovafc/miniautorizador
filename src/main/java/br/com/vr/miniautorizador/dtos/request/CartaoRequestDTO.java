@@ -10,12 +10,4 @@ public record CartaoRequestDTO(
         String numeroCartao,
         @NotBlank
         String senha) {
-
-    public Cartao toEntity(){
-        return Cartao.builder()
-                .numeroCartao(this.numeroCartao)
-                .senha(this.senha)
-                .build();
-
-    }
 }
