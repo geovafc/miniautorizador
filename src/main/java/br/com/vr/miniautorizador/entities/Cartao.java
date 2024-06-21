@@ -1,8 +1,8 @@
 package br.com.vr.miniautorizador.entities;
 
 
-import br.com.vr.miniautorizador.dto.response.CartaoResponseDTO;
-import br.com.vr.miniautorizador.dto.response.SaldoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.CartaoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.SaldoResponseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,12 +32,7 @@ public class Cartao {
         this.saldo = new BigDecimal("500.00");
     }
 
-    public CartaoResponseDTO toDTO(){
-        return new CartaoResponseDTO(this.id, this.numeroCartao, this.senha, this.saldo);
+    public void diminuirSaldo(BigDecimal valorTransacao) {
+        this.saldo = this.saldo.subtract(valorTransacao);
     }
-
-    public SaldoResponseDTO toSaldoResponseDTO(){
-        return new SaldoResponseDTO(this.saldo);
-    }
-
 }

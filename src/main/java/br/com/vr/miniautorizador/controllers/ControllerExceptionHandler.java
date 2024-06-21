@@ -1,8 +1,10 @@
-package br.com.vr.miniautorizador.controller;
+package br.com.vr.miniautorizador.controllers;
 
-import br.com.vr.miniautorizador.dto.response.ErrorResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.ErrorResponseDTO;
 import br.com.vr.miniautorizador.exceptions.CartaoJaExistenteException;
 import br.com.vr.miniautorizador.exceptions.CartaoNaoEncontradoException;
+import br.com.vr.miniautorizador.exceptions.SaldoInsuficienteException;
+import br.com.vr.miniautorizador.exceptions.SenhaInvalidaException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ControllerExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, SaldoInsuficienteException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
         public ErrorResponseDTO badRequest(final Throwable exception) {
         final var exceptionMessage = exception.getMessage();
@@ -44,6 +46,17 @@ public class ControllerExceptionHandler {
         final var exceptionMessage = exception.getMessage();
 
         log.error("m=notFound, ex= {}", exceptionMessage);
+
+        return new ErrorResponseDTO(exceptionMessage, System.currentTimeMillis());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({SenhaInvalidaException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponseDTO unauthorized(final Throwable exception) {
+        final var exceptionMessage = exception.getMessage();
+
+        log.error("m=unauthorized, ex= {}", exceptionMessage);
 
         return new ErrorResponseDTO(exceptionMessage, System.currentTimeMillis());
     }

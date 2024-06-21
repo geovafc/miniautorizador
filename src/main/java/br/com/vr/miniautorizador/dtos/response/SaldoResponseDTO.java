@@ -1,4 +1,4 @@
-package br.com.vr.miniautorizador.dto.response;
+package br.com.vr.miniautorizador.dtos.response;
 
 import java.math.BigDecimal;
 

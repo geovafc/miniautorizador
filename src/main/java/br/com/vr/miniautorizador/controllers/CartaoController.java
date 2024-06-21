@@ -1,16 +1,16 @@
-package br.com.vr.miniautorizador.controller;
+package br.com.vr.miniautorizador.controllers;
 
-import br.com.vr.miniautorizador.dto.request.CartaoRequestDTO;
-import br.com.vr.miniautorizador.dto.response.CartaoResponseDTO;
-import br.com.vr.miniautorizador.dto.response.SaldoResponseDTO;
-import br.com.vr.miniautorizador.service.CartaoService;
+import br.com.vr.miniautorizador.dtos.request.CartaoRequestDTO;
+import br.com.vr.miniautorizador.dtos.response.CartaoResponseDTO;
+import br.com.vr.miniautorizador.dtos.response.SaldoResponseDTO;
+import br.com.vr.miniautorizador.services.CartaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/cartoes")
+@RequestMapping("/cartoes")
 public class CartaoController {
 
     private final CartaoService cartaoService;
@@ -26,7 +26,7 @@ public class CartaoController {
         return new ResponseEntity<>(cartaoResponseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/saldo/{numeroCartao}")
+    @GetMapping("/{numeroCartao}")
     public ResponseEntity<SaldoResponseDTO> saldoPorNumeroCartao(@PathVariable final String numeroCartao) {
         final var saldoResponse = cartaoService.saldoPorNumeroCartao(numeroCartao);
 
